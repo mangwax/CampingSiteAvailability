@@ -19,6 +19,7 @@ export interface Campsite {
     lat: number;
     lng: number;
   };
+  nextAvailableDate?: string;
   lastChecked: Date;
 }
 
@@ -26,7 +27,7 @@ export interface NotificationPreference {
   id: string;
   campsiteId: string;
   campsiteName: string;
-  email: string;
+  bookingUrl: string;
   checkInDate: string;
   checkOutDate: string;
   minAvailableSites: number;

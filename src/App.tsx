@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { CAMPSITES } from './data/campsites';
+import { useCampsites } from './hooks/useCampsites';
 import type { Campsite, DashboardFilters, NotificationPreference } from './types/campsite';
 import { CampsiteCard } from './components/CampsiteCard';
 import { FiltersBar } from './components/FiltersBar';
@@ -18,13 +18,14 @@ const DEFAULT_FILTERS: DashboardFilters = {
 type Tab = 'dashboard' | 'notifications';
 
 function App() {
+  const { campsites, loading, error } = useCampsites();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [filters, setFilters] = useState<DashboardFilters>(DEFAULT_FILTERS);
   const [selectedCampsite, setSelectedCampsite] = useState<Campsite | null>(null);
   const [notifications, setNotifications] = useState<NotificationPreference[]>([]);
 
   const filtered = useMemo(() => {
-    return CAMPSITES.filter((c) => {
+    return campsites.filter((c) => {
       if (filters.search) {
         const q = filters.search.toLowerCase();
         if (!c.name.toLowerCase().includes(q) && !c.region.toLowerCase().includes(q)) return false;
@@ -37,7 +38,7 @@ function App() {
       }
       return true;
     });
-  }, [filters]);
+  }, [filters, campsites]);
 
   const handleSaveNotification = (pref: NotificationPreference) => {
     setNotifications((prev) => [pref, ...prev]);
@@ -98,19 +99,30 @@ function App() {
       <main className="max-w-7xl mx-auto px-4 py-6">
         {activeTab === 'dashboard' ? (
           <>
-            <StatsBar campsites={CAMPSITES} />
+            {error && (
+              <div className="mb-4 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 text-sm text-amber-800">
+                ⚠️ Could not fetch live data — showing cached results. {error}
+              </div>
+            )}
+            <StatsBar campsites={campsites} />
             <FiltersBar filters={filters} onChange={setFilters} />
 
             <div className="mt-5 flex items-center justify-between mb-3">
               <h2 className="text-gray-700 font-semibold">
-                {filtered.length === CAMPSITES.length
+                {loading
+                  ? 'Loading campsites…'
+                  : filtered.length === campsites.length
                   ? `All ${filtered.length} campsites`
-                  : `${filtered.length} of ${CAMPSITES.length} campsites`}
+                  : `${filtered.length} of ${campsites.length} campsites`}
               </h2>
               <p className="text-xs text-gray-400">Auto-refreshes every 15 minutes</p>
             </div>
 
-            {filtered.length === 0 ? (
+            {loading ? (
+              <div className="flex justify-center items-center py-20 text-gray-500 text-sm">
+                <span className="animate-pulse">Loading availability data…</span>
+              </div>
+            ) : filtered.length === 0 ? (
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-12 text-center mt-4">
                 <div className="text-4xl mb-4">🔍</div>
                 <p className="text-gray-600 font-medium">No campsites match your filters.</p>
@@ -138,7 +150,8 @@ function App() {
             <div className="mb-5">
               <h2 className="text-xl font-bold text-gray-900">Availability Alerts</h2>
               <p className="text-gray-500 text-sm mt-1">
-                Get notified by email when your chosen campsites have openings for your dates.
+                Track campsites you want to book. Your email is never stored — you'll be prompted
+                to enter it each time we send a notification.
               </p>
             </div>
             <NotificationsList

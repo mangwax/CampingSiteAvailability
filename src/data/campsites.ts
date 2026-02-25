@@ -32,6 +32,7 @@ export const CAMPSITES: Campsite[] = [
     imageUrl: 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=400&q=80',
     bookingUrl: 'https://www.discovercamping.ca',
     coordinates: { lat: 49.922, lng: -123.007 },
+    nextAvailableDate: '2025-08-14',
     lastChecked: new Date(),
   },
   {
@@ -48,6 +49,7 @@ export const CAMPSITES: Campsite[] = [
     imageUrl: 'https://images.unsplash.com/photo-1500581276021-a4bbcd0050c5?w=400&q=80',
     bookingUrl: 'https://www.discovercamping.ca',
     coordinates: { lat: 49.744, lng: -125.689 },
+    nextAvailableDate: '2025-07-22',
     lastChecked: new Date(),
   },
   {
@@ -80,6 +82,7 @@ export const CAMPSITES: Campsite[] = [
     imageUrl: 'https://images.unsplash.com/photo-1476041800959-2f6bb412c8ce?w=400&q=80',
     bookingUrl: 'https://www.discovercamping.ca',
     coordinates: { lat: 49.624, lng: -123.706 },
+    nextAvailableDate: '2025-07-19',
     lastChecked: new Date(),
   },
   {
@@ -112,6 +115,7 @@ export const CAMPSITES: Campsite[] = [
     imageUrl: 'https://images.unsplash.com/photo-1445307806294-bff7f67ff225?w=400&q=80',
     bookingUrl: 'https://www.discovercamping.ca',
     coordinates: { lat: 49.039, lng: -122.004 },
+    nextAvailableDate: '2025-08-03',
     lastChecked: new Date(),
   },
   // Private campsites
@@ -161,6 +165,7 @@ export const CAMPSITES: Campsite[] = [
     imageUrl: 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=400&q=80',
     bookingUrl: 'https://www.whistlerriverside.com',
     coordinates: { lat: 50.117, lng: -122.953 },
+    nextAvailableDate: '2025-07-28',
     lastChecked: new Date(),
   },
   {
