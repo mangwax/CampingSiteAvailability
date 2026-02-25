@@ -105,15 +105,21 @@ export function CampsiteCard({ campsite, onSetupNotification }: CampsiteCardProp
               className={`text-sm px-3 py-1.5 rounded-lg font-medium transition-colors ${
                 campsite.status !== 'unavailable'
                   ? 'bg-green-600 text-white hover:bg-green-700'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none'
+                  : 'bg-gray-600 text-white hover:bg-gray-700'
               }`}
             >
-              {campsite.status !== 'unavailable' ? 'Book' : 'Full'}
+              {campsite.status !== 'unavailable' ? 'Book' : 'View'}
             </a>
           </div>
         </div>
 
-        <p className="text-xs text-gray-400 mt-2">
+        {campsite.nextAvailableDate && (
+          <p className="text-xs text-blue-600 mt-2 font-medium">
+            📅 Next available: {new Date(campsite.nextAvailableDate + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+          </p>
+        )}
+
+        <p className="text-xs text-gray-400 mt-1">
           Updated {campsite.lastChecked.toLocaleTimeString()}
         </p>
       </div>

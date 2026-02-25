@@ -32,11 +32,18 @@ export function NotificationsList({ notifications, onToggle, onDelete }: Notific
           <div className="text-2xl mt-0.5">{n.active ? '🔔' : '🔕'}</div>
           <div className="flex-1 min-w-0">
             <p className="font-semibold text-gray-900 truncate">{n.campsiteName}</p>
-            <p className="text-sm text-gray-600">{n.email}</p>
             <p className="text-sm text-gray-500">
               {n.checkInDate} → {n.checkOutDate} · min. {n.minAvailableSites} site
               {n.minAvailableSites > 1 ? 's' : ''}
             </p>
+            <a
+              href={n.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-green-600 hover:underline mt-1 inline-block"
+            >
+              🔗 View campsite
+            </a>
             <p className="text-xs text-gray-400 mt-1">
               Created {n.createdAt.toLocaleDateString()}
             </p>
